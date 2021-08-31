@@ -1,5 +1,6 @@
 export const addMessageToStore = (state, payload) => {
   const { message, sender } = payload;
+
   // if sender isn't null, that means the message needs to be put in a brand new convo
   if (sender !== null) {
     const newConvo = {
@@ -11,15 +12,28 @@ export const addMessageToStore = (state, payload) => {
     return [newConvo, ...state];
   }
 
-  return state.map((convo) => {
-    if (convo.id === message.conversationId) {
-      convo.messages.push(message);
-      convo.latestMessageText = message.text;
-      return convo;
-    } else {
-      return convo;
-    }
-  });
+  return state
+    .map((convo) => {
+      if (convo.id === message.conversationId) {
+        const newConvo = { ...convo };
+        newConvo.messages = [...convo.messages, message];
+        newConvo.latestMessageText = message.text;
+        return newConvo;
+      } else {
+        return convo;
+      }
+    })
+    .sort((convo1, convo2) => {
+      let message1 = convo1.messages[convo1.messages.length - 1];
+      let message2 = convo2.messages[convo2.messages.length - 1];
+
+      if (message1 && message2) {
+        return new Date(message2.updatedAt) - new Date(message1.updatedAt);
+      }
+      if (message1) return -1;
+
+      return 1;
+    });
 };
 
 export const addOnlineUserToStore = (state, id) => {
@@ -67,14 +81,36 @@ export const addSearchedUsersToStore = (state, users) => {
 };
 
 export const addNewConvoToStore = (state, recipientId, message) => {
-  return state.map((convo) => {
-    if (convo.otherUser.id === recipientId) {
-      convo.id = message.conversationId;
-      convo.messages.push(message);
-      convo.latestMessageText = message.text;
-      return convo;
-    } else {
-      return convo;
-    }
+  return state
+    .map((convo) => {
+      if (convo.otherUser.id === recipientId) {
+        const newConvo = { ...convo };
+        newConvo.id = message.conversationId;
+        newConvo.messages = [...convo.messages, message];
+        newConvo.latestMessageText = message.text;
+        return newConvo;
+      } else {
+        return convo;
+      }
+    })
+    .sort((convo1, convo2) => {
+      let message1 = convo1.messages[convo1.messages.length - 1];
+      let message2 = convo2.messages[convo2.messages.length - 1];
+
+      if (message1 && message2) {
+        return new Date(message2.updatedAt) - new Date(message1.updatedAt);
+      }
+      if (message1) return -1;
+
+      return 1;
+    });
+};
+
+export const sortConversations = (conversations) => {
+  return conversations.sort((convo1, convo2) => {
+    let message1 = convo1.messages[convo1.messages.length - 1];
+    let message2 = convo2.messages[convo2.messages.length - 1];
+
+    return new Date(message2.updatedAt) - new Date(message1.updatedAt);
   });
 };
