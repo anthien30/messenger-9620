@@ -30,6 +30,7 @@ export const addMessageToStore = (state, payload) => {
       if (message1 && message2) {
         return new Date(message2.updatedAt) - new Date(message1.updatedAt);
       }
+      if (message1) return -1;
 
       return 1;
     });
@@ -99,7 +100,17 @@ export const addNewConvoToStore = (state, recipientId, message) => {
       if (message1 && message2) {
         return new Date(message2.updatedAt) - new Date(message1.updatedAt);
       }
+      if (message1) return -1;
 
       return 1;
     });
+};
+
+export const sortConversations = (conversations) => {
+  return conversations.sort((convo1, convo2) => {
+    let message1 = convo1.messages[convo1.messages.length - 1];
+    let message2 = convo2.messages[convo2.messages.length - 1];
+
+    return new Date(message2.updatedAt) - new Date(message1.updatedAt);
+  });
 };
