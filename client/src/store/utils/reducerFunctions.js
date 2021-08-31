@@ -12,16 +12,27 @@ export const addMessageToStore = (state, payload) => {
     return [newConvo, ...state];
   }
 
-  return state.map((convo) => {
-    if (convo.id === message.conversationId) {
-      const newConvo = { ...convo };
-      newConvo.messages = [...convo.messages, message];
-      newConvo.latestMessageText = message.text;
-      return newConvo;
-    } else {
-      return convo;
-    }
-  });
+  return state
+    .map((convo) => {
+      if (convo.id === message.conversationId) {
+        const newConvo = { ...convo };
+        newConvo.messages = [...convo.messages, message];
+        newConvo.latestMessageText = message.text;
+        return newConvo;
+      } else {
+        return convo;
+      }
+    })
+    .sort((convo1, convo2) => {
+      let message1 = convo1.messages[convo1.messages.length - 1];
+      let message2 = convo2.messages[convo2.messages.length - 1];
+
+      if (message1 && message2) {
+        return new Date(message2.updatedAt) - new Date(message1.updatedAt);
+      }
+
+      return 1;
+    });
 };
 
 export const addOnlineUserToStore = (state, id) => {
