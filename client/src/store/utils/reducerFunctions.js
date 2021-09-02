@@ -106,11 +106,25 @@ export const addNewConvoToStore = (state, recipientId, message) => {
     });
 };
 
-export const sortConversations = (conversations) => {
+export const sortConversationsInStore = (conversations) => {
   return conversations.sort((convo1, convo2) => {
     let message1 = convo1.messages[convo1.messages.length - 1];
     let message2 = convo2.messages[convo2.messages.length - 1];
 
     return new Date(message2.updatedAt) - new Date(message1.updatedAt);
+  });
+};
+
+export const reloadConversationInStore = (state, conversationId) => {
+  return state.map((convo) => {
+    if (convo.id === conversationId) {
+      const newConvo = { ...convo };
+
+      newConvo.messages = convo.messages.map((message) => {
+        return { ...message, read: true };
+      });
+
+      return newConvo;
+    } else return convo;
   });
 };
