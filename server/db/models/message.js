@@ -17,4 +17,15 @@ const Message = db.define('message', {
   },
 });
 
+Message.countUnreadMessages = async function (conversationId, senderId) {
+  const count = await Message.count({
+    where: {
+      conversationId,
+      senderId,
+      read: false,
+    },
+  });
+  return count;
+};
+
 module.exports = Message;

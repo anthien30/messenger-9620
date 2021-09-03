@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
@@ -46,18 +47,15 @@ const ChatContent = (props) => {
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
   useEffect(() => {
-    const messages = conversation.messages;
-    let count = 0;
-    for (let i = messages.length - 1; i >= 0; i--) {
-      if (messages[i].senderId === otherUser.id && !messages[i].read) count++;
-      else if (
-        // stopping count at latest read message or if last message is sent by this user
-        (messages[i].senderId === otherUser.id && messages[i].read) ||
-        (messages[i].senderId !== otherUser.id && i === messages.length - 1)
-      )
-        break;
-    }
-    setUnreadMessagesCount(count);
+    const getUnreadMessagesCount = async () => {
+      const { data } = await axios.get(
+        `/api/messages/${conversation.id}/${otherUser.id}`
+      );
+
+      setUnreadMessagesCount(data.count);
+    };
+
+    getUnreadMessagesCount();
   }, [conversation, otherUser.id]);
 
   useEffect(() => {
