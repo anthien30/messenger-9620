@@ -99,18 +99,4 @@ router.put('/', convoRecipientOnly('body'), async (req, res, next) => {
   }
 });
 
-router.get(
-  '/:conversationId/:senderId',
-  convoRecipientOnly('params'),
-  async (req, res, next) => {
-    try {
-      const { senderId, conversationId } = req.params;
-      const count = await Message.countUnreadMessages(conversationId, senderId);
-      res.json({ count });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 module.exports = router;

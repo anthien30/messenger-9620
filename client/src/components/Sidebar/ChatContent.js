@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
@@ -47,16 +46,8 @@ const ChatContent = (props) => {
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
   useEffect(() => {
-    const getUnreadMessagesCount = async () => {
-      const { data } = await axios.get(
-        `/api/messages/${conversation.id}/${otherUser.id}`
-      );
-
-      setUnreadMessagesCount(data.count);
-    };
-
-    getUnreadMessagesCount();
-  }, [conversation, otherUser.id]);
+    setUnreadMessagesCount(conversation.unreadMessagesCount);
+  }, [conversation]);
 
   useEffect(() => {
     const updateMessageReadStatus = async () => {
@@ -72,9 +63,14 @@ const ChatContent = (props) => {
       }
     };
     updateMessageReadStatus();
-
-    // eslint-disable-next-line
-  }, [unreadMessagesCount, activeConversation]);
+  }, [
+    unreadMessagesCount,
+    activeConversation,
+    otherUser,
+    conversation.otherUser.username,
+    conversation.id,
+    readMessages,
+  ]);
 
   return (
     <Box className={classes.root}>
