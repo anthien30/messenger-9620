@@ -24,16 +24,17 @@ const useStyles = makeStyles((theme) => ({
   unreadText: {
     color: '#000',
     fontWeight: 'bold',
+    fontSize: theme.typography.fontSize,
   },
   unreadCount: {
     marginRight: 20,
-    backgroundColor: '#3A8DFF',
-    borderRadius: '50%',
-    fontSize: 10,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: '45%',
+    fontSize: theme.typography.fontSize,
     fontWeight: 'bold',
     color: '#FFFFFF',
     letterSpacing: -0.2,
-    padding: '2px 6px',
+    padding: '2px 9px',
   },
 }));
 
