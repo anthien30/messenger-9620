@@ -9,6 +9,7 @@ import {
   Button,
   FormControl,
   TextField,
+  InputAdornment,
 } from '@material-ui/core';
 import { login } from './store/utils/thunkCreators';
 import SidePicture from './SidePicture';
@@ -150,6 +151,13 @@ const Login = (props) => {
                   aria-label="password"
                   type="password"
                   name="password"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Typography color="primary">Forgot?</Typography>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </FormControl>
             </Grid>
