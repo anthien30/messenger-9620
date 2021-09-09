@@ -50,6 +50,7 @@ const Input = (props) => {
           value={text}
           name="text"
           onChange={handleChange}
+          autoComplete="off"
         />
       </FormControl>
     </form>
