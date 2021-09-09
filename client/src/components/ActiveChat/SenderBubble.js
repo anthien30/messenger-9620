@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, Avatar } from '@material-ui/core';
 
@@ -34,9 +34,17 @@ const useStyles = makeStyles(() => ({
 
 const SenderBubble = (props) => {
   const classes = useStyles();
-  const { time, text, lastSeen, otherUser } = props;
+  const messageRef = useRef();
+  const { time, text, lastSeen, otherUser, last } = props;
+
+  useEffect(() => {
+    if (last) {
+      messageRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [last]);
+
   return (
-    <Box className={classes.root}>
+    <Box ref={messageRef} className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
       <Box className={classes.bubble}>
         <Typography className={classes.text}>{text}</Typography>
