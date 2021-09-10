@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { postMessage } from '../../store/utils/thunkCreators';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     justifySelf: 'flex-end',
     marginTop: 15,
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
       cursor: 'pointer',
     },
     color: '#95A7C4',
-    marginRight: 15,
+    marginRight: theme.spacing(3),
     opacity: 0.5,
   },
 }));

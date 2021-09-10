@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Hidden } from '@material-ui/core';
-import TextsmsOutlinedIcon from '@material-ui/icons/TextsmsOutlined';
 
 const useStyles = makeStyles((theme) => ({
   picture: {
@@ -29,7 +28,7 @@ const SidePicture = () => {
   return (
     <Hidden smDown>
       <Box className={classes.picture}>
-        <TextsmsOutlinedIcon
+        <img
           style={{
             position: 'absolute',
             zIndex: '10',
@@ -37,9 +36,12 @@ const SidePicture = () => {
             color: '#ffffff',
             fontSize: '85px',
           }}
+          src="/bubble.svg"
+          alt="icon"
         />
-        <p className={classes.caption}>Converse with anyone</p>
-        <p className={classes.caption}>with any language</p>
+
+        <Box className={classes.caption}>Converse with anyone</Box>
+        <Box className={classes.caption}>with any language</Box>
       </Box>
     </Hidden>
   );

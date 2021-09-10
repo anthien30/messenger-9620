@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: theme.typography.title.regular.fontSize,
+    margin: theme.spacing(6.4),
     marginLeft: '17%',
   },
   inputWrapper: {
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
       fontSize: theme.typography.title.small.fontSize,
-      marginLeft: theme.spacing(0),
+      margin: theme.spacing(4.4),
       textAlign: 'center',
     },
     inputWrapper: {
@@ -112,7 +113,7 @@ const Form = (props) => {
           </Button>
         </Grid>
 
-        <p className={classes.title}>{props.title}</p>
+        <Box className={classes.title}>{props.title}</Box>
 
         <form onSubmit={props.handleBtnSubmit}>
           <Grid>
