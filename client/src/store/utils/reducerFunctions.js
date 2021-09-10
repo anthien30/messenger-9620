@@ -34,7 +34,7 @@ export const addMessageToStore = (state, payload) => {
       let message2 = convo2.messages[convo2.messages.length - 1];
 
       if (message1 && message2) {
-        return new Date(message2.updatedAt) - new Date(message1.updatedAt);
+        return new Date(message2.createdAt) - new Date(message1.createdAt);
       }
       if (message1) return -1;
 
@@ -104,7 +104,7 @@ export const addNewConvoToStore = (state, recipientId, message) => {
       let message2 = convo2.messages[convo2.messages.length - 1];
 
       if (message1 && message2) {
-        return new Date(message2.updatedAt) - new Date(message1.updatedAt);
+        return new Date(message2.createdAt) - new Date(message1.createdAt);
       }
       if (message1) return -1;
 
@@ -117,7 +117,7 @@ export const sortConversationsInStore = (conversations) => {
     let message1 = convo1.messages[convo1.messages.length - 1];
     let message2 = convo2.messages[convo2.messages.length - 1];
 
-    return new Date(message2.updatedAt) - new Date(message1.updatedAt);
+    return new Date(message2.createdAt) - new Date(message1.createdAt);
   });
 };
 

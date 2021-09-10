@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { FormControl, FilledInput } from '@material-ui/core';
+import { FormControl, FilledInput, InputAdornment } from '@material-ui/core';
+import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
+import FilterNoneIcon from '@material-ui/icons/FilterNone';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { postMessage } from '../../store/utils/thunkCreators';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     justifySelf: 'flex-end',
     marginTop: 15,
@@ -14,6 +16,16 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#F4F6FA',
     borderRadius: 8,
     marginBottom: 20,
+    padding: 10,
+  },
+  icon: {
+    '&:hover': {
+      opacity: 1,
+      cursor: 'pointer',
+    },
+    color: '#95A7C4',
+    marginRight: theme.spacing(3),
+    opacity: 0.5,
   },
 }));
 
@@ -51,6 +63,15 @@ const Input = (props) => {
           name="text"
           onChange={handleChange}
           autoComplete="off"
+          endAdornment={
+            <InputAdornment position="end">
+              <SentimentSatisfiedOutlinedIcon className={classes.icon} />
+              <FilterNoneIcon
+                className={classes.icon}
+                style={{ transform: 'rotate(90deg)' }}
+              />
+            </InputAdornment>
+          }
         />
       </FormControl>
     </form>

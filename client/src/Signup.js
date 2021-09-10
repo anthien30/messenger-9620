@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-  FormHelperText,
-} from '@material-ui/core';
 import { register } from './store/utils/thunkCreators';
+import Form from './Form';
 
 const Login = (props) => {
   const history = useHistory();
@@ -36,74 +28,49 @@ const Login = (props) => {
     return <Redirect to="/home" />;
   }
 
+  const formElements = [
+    {
+      label: 'Username',
+      ariaLabel: 'username',
+      name: 'username',
+      type: 'text',
+    },
+    {
+      label: 'E-mail address',
+      ariaLabel: 'e-mail address',
+      name: 'email',
+      type: 'email',
+    },
+    {
+      label: 'Password',
+      ariaLabel: 'password',
+      name: 'password',
+      type: 'password',
+      inputProps: { minLength: 6 },
+      error: !!formErrorMessage.confirmPassword,
+      errorText: formErrorMessage.confirmPassword,
+    },
+    {
+      label: 'Confirm Password',
+      ariaLabel: 'confirm password',
+      name: 'confirmPassword',
+      type: 'password',
+      inputProps: { minLength: 6 },
+      error: !!formErrorMessage.confirmPassword,
+      errorText: formErrorMessage.confirmPassword,
+    },
+  ];
+
   return (
-    <Grid container justifyContent="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to log in?</Typography>
-          <Button onClick={() => history.push('/login')}>Login</Button>
-        </Grid>
-        <form onSubmit={handleRegister}>
-          <Grid>
-            <Grid>
-              <FormControl>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                  required
-                />
-              </FormControl>
-            </Grid>
-            <Grid>
-              <FormControl>
-                <TextField
-                  label="E-mail address"
-                  aria-label="e-mail address"
-                  type="email"
-                  name="email"
-                  required
-                />
-              </FormControl>
-            </Grid>
-            <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  aria-label="password"
-                  label="Password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="password"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  label="Confirm Password"
-                  aria-label="confirm password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="confirmPassword"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-            <Button type="submit" variant="contained" size="large">
-              Create
-            </Button>
-          </Grid>
-        </form>
-      </Box>
-    </Grid>
+    <Form
+      question="Already have an account?"
+      switchBtnText="Login"
+      handleSwitchBtnClick={() => history.push('/login')}
+      title="Create an account"
+      handleBtnSubmit={handleRegister}
+      submitBtnText="Create"
+      formElements={formElements}
+    />
   );
 };
 
